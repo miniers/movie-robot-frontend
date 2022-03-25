@@ -29,7 +29,7 @@ function DoubanConfigComponent({}) {
     const [ruleData, setRuleData] = useState([])
     const [doubanTags, setDoubanTags] = useState({cate: [], area: []})
     const [mediaPaths, setMediaPaths] = useState([])
-    const [users, setUsers] = useState([{id: '', nickname: '', pull_time_range: 365, score_rule: 'compress'}])
+    const [users, setUsers] = useState([{id: '', nickname: '',cookie:'', pull_time_range: 365, score_rule: 'compress'}])
     const [tags, setTags] = useState([])
     const [downloadPath, setDownloadPath] = useState([{
         type: "movie",

@@ -114,6 +114,19 @@ const UserConfigComponent = ({ruleData, users, setUsers, submitting, setHasError
                             <ScoreRuleSelectComponent name='score_rule' value={user.score_rule} data={ruleData}
                                                       onChange={(e) => handleOnChange(i, e)}/>
                         </Grid>
+                        <Grid item md={12}>
+                            <TextField
+                                name="cookie"
+                                label="用户cookie"
+                                fullWidth
+                                variant="outlined"
+                                error={error(i, 'cookie')}
+                                helperText={helperText(i, 'cookie') || "用来自动更改豆瓣标签。"}
+                                value={user.cookie}
+                                onChange={(e) => handleOnChange(i, e)}
+                                onBlur={(e) => handleOnBlur(i, e)}
+                            />
+                        </Grid>
                     </Grid>
                 </CardContent>
             </Card>))}
