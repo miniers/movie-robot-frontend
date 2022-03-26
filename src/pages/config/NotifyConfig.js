@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/macro";
-import {Helmet} from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
-import {FormControl, FormHelperText, MenuItem, Paper, Select, Typography} from "@mui/material";
+import { FormControl, FormHelperText, MenuItem, Paper, Select, Typography } from "@mui/material";
 
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BarkConfigComponent from "@/pages/config/notify/BarkConfigComponent";
 import QywxConfigComponent from "@/pages/config/notify/QywxConfigComponent";
 import PushDeerConfigComponent from "@/pages/config/notify/PushDeerConfigComponent";
@@ -22,17 +22,18 @@ const Wrapper = styled(Paper)`
 
 function NotifyConfig() {
     const navigate = useNavigate();
+    const [users, setUsers] = useState([])
     const [app, setApp] = useState("qywx")
-    const [config, setConfig] = useState({bark: null, qywx: null, pushdeer: null})
+    const [config, setConfig] = useState({ bark: null, qywx: null, pushdeer: null })
     const location = useLocation();
     let isInit = false;
     if (location.pathname.startsWith('/setup')) {
         isInit = true
     }
     const onSubmit = async (values, setMessage) => {
-        let params = {"type": app, "args": values};
+        let params = { "type": app, "args": values };
         const res = await axios.post("/api/config/save_notify", params);
-        const {code, message, data} = res;
+        const { code, message, data } = res;
         if (code === undefined || code === 1) {
             pageMessage.error(message || '操作失败')
             throw new Error(message);
@@ -45,9 +46,9 @@ function NotifyConfig() {
         }
     }
     const onTest = async (values, setMessage) => {
-        let params = {"type": app, "args": values};
+        let params = { "type": app, "args": values };
         const res = await axios.post("/api/config/test_notify", params);
-        const {code, message, data} = res;
+        const { code, message, data } = res;
         if (code === undefined || code === 1) {
             pageMessage.error(message || '测试发送推送消息失败！');
             return
@@ -67,10 +68,15 @@ function NotifyConfig() {
                 setConfig(data)
             }
         });
+        let res_config = await axios.get("/api/config/get_douban");
+        let config = res_config.data;
+        if (config !== undefined && config !== null && config.users  && config.users.length) {
+            setUsers(config.users);
+        }
     }, [])
     return (<React.Fragment>
         <Wrapper>
-            <Helmet title={isInit ? "下载工具设置 - 初始化" : "下载工具设置"}/>
+            <Helmet title={isInit ? "下载工具设置 - 初始化" : "下载工具设置"} />
 
             <Typography component="h1" variant="h4" align="center" gutterBottom>
                 通知应用设置
@@ -94,12 +100,12 @@ function NotifyConfig() {
                 <FormHelperText>目前已支持的推送应用</FormHelperText>
             </FormControl>
             {app === 'qywx' &&
-                <QywxConfigComponent isInit={isInit} data={config.qywx} onSubmitEvent={onSubmit} onTestEvent={onTest}/>}
+                <QywxConfigComponent isInit={isInit} data={config.qywx} users={users} onSubmitEvent={onSubmit} onTestEvent={onTest} />}
             {app === 'bark' &&
-                <BarkConfigComponent isInit={isInit} data={config.bark} onSubmitEvent={onSubmit} onTestEvent={onTest}/>}
+                <BarkConfigComponent isInit={isInit} data={config.bark} users={users} onSubmitEvent={onSubmit} onTestEvent={onTest} />}
             {app === 'pushdeer' &&
-                <PushDeerConfigComponent isInit={isInit} data={config.pushdeer} onSubmitEvent={onSubmit}
-                                         onTestEvent={onTest}/>}
+                <PushDeerConfigComponent isInit={isInit} users={users} data={config.pushdeer} onSubmitEvent={onSubmit}
+                    onTestEvent={onTest} />}
         </Wrapper>
     </React.Fragment>);
 }
