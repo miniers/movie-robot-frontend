@@ -103,25 +103,19 @@ function PushDeerConfigComponent({ isInit, data, onSubmitEvent, users, onTestEve
         <TextField
             type="text"
             name="api"
+            {...formik.getFieldProps('api')}
             label="推送API地址"
-            value={formik.values.api}
-            error={Boolean(formik.touched.api && formik.errors.api)}
             fullWidth
             helperText={'pushdeer的api地址，默认是官方，可以改为自建'}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
             my={3}
         />
         <TextField
             type="text"
             name="pushkey"
             label="pushkey"
-            value={formik.values.pushkey}
-            error={Boolean(formik.touched.pushkey && formik.errors.pushkey)}
+            {...formik.getFieldProps('pushkey')}
             fullWidth
             helperText={'推送接口的pushkey'}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
             my={3}
         />
         <MessageTemplateComponent formik={formik} messageTemplate={messageTemplate}
@@ -131,12 +125,10 @@ function PushDeerConfigComponent({ isInit, data, onSubmitEvent, users, onTestEve
             type="text"
             key={index}
             name={`pushkeys[${index}].pushkey`}
-            label={`${user.nickname}的pushkey`}
-            value={formik.values.pushkeys[index].pushkey}
+            {...formik.getFieldProps(`pushkeys[${index}].pushkey`)}
+            label={`${user.nickname} 的 pushkey`}
             fullWidth
             helperText={`用来给 ${user.nickname} 独立推送`}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
             my={3}
         />) : ''}
         <Centered>
