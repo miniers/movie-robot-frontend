@@ -75,12 +75,16 @@ const darkVariant = merge(defaultVariant, {
   palette: {
     mode: "dark",
     primary: {
-      main: customBlue[600],
+      main: "#444",
+      contrastText: "#FFF",
+    },
+    secondary: {
+      main: "#000",
       contrastText: "#FFF",
     },
     background: {
-      default: "#1B2635",
-      paper: "#233044",
+      default: "#111",
+      paper: "#191919",
     },
     text: {
       primary: "rgba(255, 255, 255, 0.95)",
@@ -89,14 +93,36 @@ const darkVariant = merge(defaultVariant, {
   },
   header: {
     color: grey[300],
-    background: "#1B2635",
+    background: "#000",
     search: {
       color: grey[200],
     },
   },
   footer: {
     color: grey[300],
-    background: "#233044",
+    background: "#222",
+  },
+  sidebar: {
+    color: grey[200],
+    background: "#222",
+    header: {
+      color: grey[200],
+      background: "#222",
+      brand: {
+        color: customBlue[500],
+      },
+    },
+    footer: {
+      color: grey[200],
+      background: "#222",
+      online: {
+        background: green[500],
+      },
+    },
+    badge: {
+      color: "#FFF",
+      background: customBlue[500],
+    },
   },
 });
 

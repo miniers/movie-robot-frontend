@@ -37,7 +37,7 @@ const UserConfigComponent = ({ruleData, users, setUsers, submitting, setHasError
             for (let i = 0; i < users.length; i++) {
                 let u = users[i];
                 for (let k of Object.keys(u)) {
-                    if (u[k] === undefined || u[k] === '') {
+                    if (u[k] === undefined || u[k] === '' && k !== 'cookie') {
                         tmpErrors[k + i] = '值不能为空'
                         hasError = true;
                     }
@@ -124,7 +124,6 @@ const UserConfigComponent = ({ruleData, users, setUsers, submitting, setHasError
                                 helperText={helperText(i, 'cookie') || "用来自动更改豆瓣标签。"}
                                 value={user.cookie}
                                 onChange={(e) => handleOnChange(i, e)}
-                                onBlur={(e) => handleOnBlur(i, e)}
                             />
                         </Grid>
                     </Grid>
