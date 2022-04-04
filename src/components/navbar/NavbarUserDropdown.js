@@ -43,11 +43,11 @@ function NavbarUserDropdown() {
     await signOut();
     navigate("/auth/sign-in");
   };
-  const runTaskNow = ()=>{
+  const runTaskNow = (name)=>{
     axios
       .get("/api/task/run", {
         params: {
-          name: "sync_movies",
+          name: "sync_movies_" + name,
         },
       })
       .then(({ code, message }) => {
@@ -76,7 +76,8 @@ function NavbarUserDropdown() {
         onClose={closeMenu}
       >
         <MenuItem onClick={()=>{theme.toggle(true);closeMenu()}}>更换主题</MenuItem>
-        <MenuItem onClick={runTaskNow}>执行豆瓣任务</MenuItem>
+        <MenuItem onClick={()=>{runTaskNow('douban')}}>执行豆瓣任务</MenuItem>
+        <MenuItem onClick={()=>{runTaskNow('overseerr')}}>执行Overseerr任务</MenuItem>
         <MenuItem onClick={handleSignOut}>退出</MenuItem>
       </Menu>
     </React.Fragment>

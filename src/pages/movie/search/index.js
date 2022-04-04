@@ -199,7 +199,7 @@ function DownloadRecords(props) {
             axios.get("/api/movie/search_keyword", {
                 params: {
                     keyword: keyword,
-                    rule_name: "compress"
+                    rule_name: "compact"
                 }
             }).then((res) => {
                 setLoading(false);
