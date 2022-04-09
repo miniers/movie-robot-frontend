@@ -39,7 +39,7 @@ function PushDeerConfigComponent({ isInit, data, onSubmitEvent, users, onTestEve
     })
     const formik = useFormik({
         initialValues: {
-            api: '',
+            api: 'https://api2.pushdeer.com/message/push',
             pushkey: '',
             pushkeys: [],
             message_template: 'movie_completed',
