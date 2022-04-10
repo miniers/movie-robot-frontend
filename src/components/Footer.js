@@ -58,7 +58,7 @@ function Footer() {
               />
             </ListItemButton>
             <ListItemButton component="a" href="#">
-              <ListItemText primary="version: Beta 1.8" />
+              <ListItemText primary="Version: Beta 2.1" />
             </ListItemButton>
           </List>
         </Grid>
