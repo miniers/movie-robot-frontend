@@ -39,6 +39,7 @@ function EditUser({}) {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const [qywxUserList, setQywxUserList] = useState([])
+    const [overseerrUserList, setOverseerrUserList] = useState([])
     const [doubanUserList, setDoubanUserList] = useState([])
     const op = searchParams.get("op") || "add";
     const id = searchParams.get('id');
@@ -49,6 +50,7 @@ function EditUser({}) {
             password: '',
             role: 2,
             qywxUser: '',
+            overseerrUser: '',
             doubanUser: '',
             pushdeerKey: '',
             barkUrl: ''
@@ -68,9 +70,9 @@ function EditUser({}) {
                 setSubmitting(true)
                 let r;
                 if (op === "add") {
-                    r = await registerUser(values.username, values.password, values.nickname, values.role, values.doubanUser, values.qywxUser, values.pushdeerKey, values.barkUrl)
+                    r = await registerUser(values.username, values.password, values.nickname, values.role, values.doubanUser, values.qywxUser, values.overseerrUser, values.pushdeerKey, values.barkUrl)
                 } else {
-                    r = await updateUser(id, values.username, values.nickname, values.password, values.role, values.doubanUser, values.qywxUser, values.pushdeerKey, values.barkUrl)
+                    r = await updateUser(id, values.username, values.nickname, values.password, values.role, values.doubanUser, values.qywxUser, values.overseerrUser, values.pushdeerKey, values.barkUrl)
                 }
                 if (r.code === 0) {
                     message.success(r.message)
@@ -92,6 +94,9 @@ function EditUser({}) {
         if (userOptions) {
             if (userOptions.qywx_user_list) {
                 setQywxUserList(userOptions.qywx_user_list);
+            }
+            if (userOptions.overseerr_user_list) {
+                setOverseerrUserList(userOptions.overseerr_user_list);
             }
             if (userOptions.douban_user_list) {
                 setDoubanUserList(userOptions.douban_user_list);
@@ -116,6 +121,9 @@ function EditUser({}) {
             }
             if (user.qywx_user) {
                 formik.setFieldValue("qywxUser", user.qywx_user)
+            }
+            if (user.overseerr_user) {
+                formik.setFieldValue("overseerrUser", user.overseerr_user)
             }
             if (user.pushdeer_key) {
                 formik.setFieldValue("pushdeerKey", user.pushdeer_key)
@@ -223,6 +231,19 @@ function EditUser({}) {
                             ))}
                         </Select>
                         <FormHelperText>在企业微信的应用中发送"绑定用户"后，可以回来选择绑定（可留空）</FormHelperText>
+                    </FormControl>
+                    <FormControl m={4} fullWidth>
+                        {formik.values.overseerrUser ? null : <InputLabel>Overseerr用户</InputLabel>}
+                        <Select
+                            name="overseerrUser"
+                            value={formik.values.overseerrUser}
+                            onChange={formik.handleChange}
+                            displayEmpty
+                        >
+                            {overseerrUserList.map((row) => (
+                                <MenuItem key={row.email} value={row.email}>{row.username||row.email}</MenuItem>
+                            ))}
+                        </Select>
                     </FormControl>
                     <TextField
                         type="text"

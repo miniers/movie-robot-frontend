@@ -66,6 +66,7 @@ const UserTable = ({data}) => {
                                 <TableCell>角色</TableCell>
                                 <TableCell>豆瓣</TableCell>
                                 <TableCell>微信</TableCell>
+                                <TableCell>Overseerr</TableCell>
                                 <TableCell>PushDeer</TableCell>
                                 <TableCell>Bark</TableCell>
                                 <TableCell>操作</TableCell>
@@ -81,6 +82,7 @@ const UserTable = ({data}) => {
                                     <TableCell>{getRole(row.role)}</TableCell>
                                     <TableCell>{row.douban_user ? row.douban_user : "未设置"}</TableCell>
                                     <TableCell>{row.qywx_user ? row.qywx_user : "未设置"}</TableCell>
+                                    <TableCell>{row.overseerr_user ? row.overseerr_user : "未设置"}</TableCell>
                                     <TableCell>{row.pushdeer_key ? "已设置" : "未设置"}</TableCell>
                                     <TableCell>{row.bark_url ? "已设置" : "未设置"}</TableCell>
                                     <TableCell>
