@@ -5,9 +5,14 @@ import message from "@/utils/message";
 
 
 const SubscribeDialog = ({open, handleClose, data, onComplete}) => {
-    const {id, name, year} = data;
+    const {name, year} = data;
     const {mutateAsync: addSubscribe, isLoading} = useAddSubscribe();
-
+    let id;
+    if (data.sub_id) {
+        id = data.sub_id;
+    } else {
+        id = data.id;
+    }
     const handleSubmit = async () => {
         addSubscribe({id}, {
             onSuccess: resData => {
@@ -42,7 +47,7 @@ const SubscribeDialog = ({open, handleClose, data, onComplete}) => {
                     {`确定要订阅 ${name}（${year}） 吗？订阅后将立即开始下载！`}
                 </DialogContentText>
             </DialogContent>
-            <DialogActions>、
+            <DialogActions>
                 <Button onClick={handleSubmit} autoFocus disabled={isLoading}>
                     确定
                 </Button>

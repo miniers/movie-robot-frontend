@@ -1,53 +1,82 @@
 import React from 'react';
 import TitleCard from '../TitleCard';
-import { Box } from "@mui/material";
+import {Box} from "@mui/material";
 import styled from "styled-components/macro";
 import Empty from '../Empty';
 import CircularProgress from '@mui/material/CircularProgress';
 
+const Subject = ({media}) => {
+    if (media.type === "Movie") {
+        return (
+            <span> {media?.release_year}</span>
+        )
+    } else {
+        return (
+            <span>{media?.season_year}</span>
+        )
+    }
+
+}
+
+function getYear(media) {
+    if (!media) {
+        return "";
+    }
+
+    if (media?.type === "Movie") {
+        return media?.release_year;
+    } else {
+        if (media?.season_year) {
+            return "第" + media.season_index + "季(" + media?.season_year + ")"
+        }
+    }
+}
 
 const ListView = ({items, isLoading}) => {
-  const isEmpty = isLoading===false && items?.length === 0;
-  if (isLoading) {
+    const isEmpty = isLoading === false && items?.length === 0;
+    if (isLoading) {
+        return (
+            <Box sx={{display: 'grid', placeItems: 'center'}}>
+                <CircularProgress/>
+            </Box>
+        );
+    }
+    if (isEmpty) {
+        return (<Empty/>)
+    }
     return (
-      <Box sx={{ display: 'grid', placeItems:'center' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-  if (isEmpty) {
-    return (<Empty />)
-  }
-  return (
-    <Ul>
-      {/* {
+        <Ul>
+            {/* {
         isEmpty && <Empty />
       } */}
-      {
-        items?.map((title, index) => {
-          return <li>
-            <TitleCard
-              canExpand
-              id={title.id}
-              image={title?.poster_path}
-              summary={title?.desc}
-              title={title?.cn_name || title?.en_name}
-              year={title?.release_year}
-              mediaType={title?.type}
-              status={title?.status}
-            />
-          </li>;
-        })
-      }
-    </Ul>
-  )
+            {
+                items?.map((title, index) => {
+                    return <li key={title.id}>
+                        <TitleCard
+                            key={'card' + title.id}
+                            canExpand
+                            id={title.id}
+                            image={title?.poster_path}
+                            summary={title?.desc}
+                            title={title?.cn_name || title?.en_name}
+                            year={getYear(title)}
+                            mediaType={title?.type}
+                            status={title?.status}
+                            extra={title}
+                            showBottomTitle={false}
+                        />
+                    </li>;
+                })
+            }
+        </Ul>
+    )
 }
 
 export default ListView;
 
 const Ul = styled.ul`
   list-style: none;
-  margin: 0;
+  margin: '10px 0';
   padding: 0;
   display: grid;
   gap: 16px;
