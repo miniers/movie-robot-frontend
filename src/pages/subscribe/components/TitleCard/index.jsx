@@ -8,10 +8,11 @@ import {
     CheckCircle as CheckCircleIcon,
     DeleteForever as DeleteForeverIcon,
     FileDownload as FileDownloadIcon,
+    FilterList,
     Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import Transition from '@/components/Transition';
-import {cyan, green, grey, indigo, yellow} from "@mui/material/colors";
+import {blue, cyan, green, grey, indigo, yellow} from "@mui/material/colors";
 import SubscribeDialog from '../SubscribeDialog';
 import DeleteConfrimDialog from '../DeleteConfrimDialog';
 import ReNewDialog from "@/pages/subscribe/components/ReNewDialog";
@@ -28,7 +29,8 @@ const ImgWrap = styled.img`
 `;
 
 const renderStatueIcon = (status) => {
-    // status: 0: 已订阅待处理，1: 已处理，2:未订阅
+    console.log(status)
+    // status: 0: 已订阅待处理，1: 已处理，2:洗版中
     let icon;
     // eslint-disable-next-line default-case
     switch (status) {
@@ -40,6 +42,10 @@ const renderStatueIcon = (status) => {
             break;
         case 1:
             icon = <CheckCircleIcon htmlColor={green[400]}/>
+            break;
+        case 2:
+            icon = <Autorenew htmlColor={blue[500]}/>
+            break;
     }
     return icon;
 }
@@ -207,7 +213,7 @@ const TitleCard = ({
                             </ShadowLinkContainer>
                             <RequestWrapper>
                                 {
-                                    currentStatus === 2 && <Button
+                                    (currentStatus === undefined || currentStatus === null) && <Button
                                         sx={{width: '100%'}}
                                         variant="contained"
                                         startIcon={<FileDownloadIcon/>}
@@ -248,6 +254,20 @@ const TitleCard = ({
                                         }}
                                     >
                                         重新下载
+                                    </Button>
+                                }
+                                {
+                                    currentStatus === 2 && <Button
+                                        color="success"
+                                        sx={{width: '100%'}}
+                                        variant="contained"
+                                        startIcon={<FilterList/>}
+                                        size="small"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                        }}
+                                    >
+                                        调整规格
                                     </Button>
                                 }
                             </RequestWrapper>
